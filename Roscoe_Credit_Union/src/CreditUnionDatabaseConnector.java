@@ -26,7 +26,7 @@ public class CreditUnionDatabaseConnector {
 
     // Add an account to the 'Account' table
     public void addAccount(int personAccountID, String firstName, String middleName, String lastName, String SSN, String streetAddress, String city, String state, String zipCode, String username, String password) {
-        String query = "INSERT INTO Account (personAccountID, firName, middleName, lastName, SSN, streetAddress, city, state, zipCode, username, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Account (personAccountID, firstName, middleName, lastName, SSN, streetAddress, city, state, zipCode, username, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement pstmt = con.prepareStatement(query)) {
             pstmt.setInt(1, personAccountID);
             pstmt.setString(2, firstName);
@@ -69,7 +69,7 @@ public class CreditUnionDatabaseConnector {
             if (rs.next()) {
                 Account account = new Account();
                 account.setPersonAccountID(rs.getInt("personAccountID"));
-                account.setFirstName(rs.getString("firName"));
+                account.setFirstName(rs.getString("firstName"));
                 account.setMiddleName(rs.getString("middleName"));
                 account.setLastName(rs.getString("lastName"));
                 account.setSSN(rs.getString("SSN"));
@@ -88,11 +88,18 @@ public class CreditUnionDatabaseConnector {
         return null; // If not found
     }
 
-    // Update an account in the 'Account' table
+ // Update an account in the 'Account' table
     public void updateAccount(int personAccountID, String firstName, String middleName, String lastName, String SSN, String streetAddress, String city, String state, String zipCode, String username, String password) {
-        String query = "UPDATE Account SET firName = ?, middleName = ?, lastName = ?, SSN = ?, streetAddress = ?, city = ?, state = ?, zipCode = ?, username = ?, password = ? WHERE personAccountID = ?";
+        String query = "UPDATE Account SET firstName = ?, middleName = ?, lastName = ?, SSN = ?, streetAddress = ?, city = ?, state = ?, zipCode = ?, username = ?, password = ? WHERE personAccountID = ?";
         try (PreparedStatement pstmt = con.prepareStatement(query)) {
-            // ... set fields
+            pstmt.setString(1, firstName);
+            pstmt.setString(2, middleName);
+            pstmt.setString(3, lastName);
+            pstmt.setString(4, SSN);
+            pstmt.setString(5, streetAddress);
+            pstmt.setString(6, city);
+            pstmt.setString(7, state);
+            pstmt.setString(8, zipCode);
             pstmt.setString(9, username);
             pstmt.setString(10, password);
             pstmt.setInt(11, personAccountID);
@@ -103,6 +110,7 @@ public class CreditUnionDatabaseConnector {
             System.out.println("Failed to update account");
         }
     }
+
 
     // Delete an account from the 'Account' table
     public void deleteAccount(int personAccountID) {
