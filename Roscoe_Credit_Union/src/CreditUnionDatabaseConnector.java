@@ -58,6 +58,12 @@ public class CreditUnionDatabaseConnector {
         String query = "SELECT * FROM Account WHERE username = ? AND password = ?";
         return getAccount(query, username, password);
     }
+    
+    // Get an account from the 'Account' table by SSN
+    public Account getAccountBySSN(String SSN) {
+        String query = "SELECT * FROM Account WHERE SSN = ?";
+        return getAccount(query, SSN);
+    }
 
     // Helper method to retrieve account
     private Account getAccount(String query, Object... params) {
@@ -110,7 +116,6 @@ public class CreditUnionDatabaseConnector {
             System.out.println("Failed to update account");
         }
     }
-
 
     // Delete an account from the 'Account' table
     public void deleteAccount(int personAccountID) {
