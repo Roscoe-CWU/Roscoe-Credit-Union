@@ -11,7 +11,6 @@ public abstract class Card {
 	 */
 	public Card(int linkedAccountID) {
 		this.linkedAccountID = linkedAccountID;
-		//cardNumber = uniqueID;
 	}
 	
 	/**

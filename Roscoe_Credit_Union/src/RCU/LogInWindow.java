@@ -18,24 +18,41 @@ import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
 import java.awt.Toolkit;
+import javax.swing.JPasswordField;
 
 public class LogInWindow {
 
 	private JFrame frame;
 	private JTextField textFieldUsername;
-	private JTextField textFieldPassword;
+	private JPasswordField textFieldPassword;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		CustomerAccount test = new CustomerAccount("rpatnode", "password", "111111111", "Roscoe", "T", "Patnode", "405 Inconspicuos Way", "Secret City", "Washington", "98296", 1, 1);
+		
+
+		test.addBankAccount(new BankAccount("Emergency Savings", "111111111", "Savings"));
+		test.addBankAccount(new BankAccount("Spending Money", "111111111", "Checkings"));
+		
+		ArrayList<BankAccount> bankAccounts = test.getBankAccounts();
+		
+		
+		
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					LogInWindow window = new LogInWindow();
 					window.frame.setVisible(true);
+					
+					CustomerView custView = new CustomerView(test);
+					custView.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -54,7 +71,7 @@ public class LogInWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
+		frame = new JFrame("Roscoe Credit Union");
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(LogInWindow.class.getResource("/resources/Logo-50x50.png")));
 		frame.setBounds(100, 100, 491, 467);
 		frame.setResizable(false);
@@ -68,7 +85,7 @@ public class LogInWindow {
 		lblPassword.setForeground(new Color(0, 0, 128));
 		panelPassword.add(lblPassword);
 		
-		textFieldPassword = new JTextField();
+		textFieldPassword = new JPasswordField();
 		textFieldPassword.setColumns(20);
 		panelPassword.add(textFieldPassword);
 		

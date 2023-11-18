@@ -1,45 +1,30 @@
 package RCU;
 
-import java.util.List;
-import java.util.ArrayList;
 
 public class BankAccount {
-	private int accountID;
+	private int bankAccountID;
 	private String accountName;
 	private double balance;
-	private int accountSSN;
+	private String accountSSN;
 	private String accountType;
-	private List<CreditCard> creditCards;
-	private List<DebitCard> debitCards;
 	
-	/**
-	 * minimal constructor for BankAccount
-	 * @param type
-	 */
-	public BankAccount(String type) {
-		accountType = type;
-		creditCards = new ArrayList<CreditCard>();
-		debitCards = new ArrayList<DebitCard>();
-	}
 	/**
 	 * more exansive constructor for BankAccount
 	 * @param accountName
 	 * @param accountSSN
 	 * @param accountType
 	 */
-	public BankAccount(String accountName, int accountSSN, String accountType) {
+	public BankAccount(String accountName, String accountSSN, String accountType) {
 		this.accountName = accountName;
 		this.accountSSN = accountSSN;
 		this.accountType = accountType;
-		creditCards = new ArrayList<CreditCard>();
-		debitCards = new ArrayList<DebitCard>();
 	}
 	/**
 	 * getter for accountID
 	 * @return accountID
 	 */
-	public int getAccountID() {
-		return accountID;
+	public int getBankAccountID() {
+		return bankAccountID;
 	}
 	/**
 	 * getter for accountName
@@ -89,7 +74,7 @@ public class BankAccount {
 	 * getter for accountSSN
 	 * @return accountSSN
 	 */
-	public int getAccountSSN() {
+	public String getAccountSSN() {
 		return accountSSN;
 	}
 	/**
@@ -98,19 +83,5 @@ public class BankAccount {
 	 */
 	public String getAccountType() {
 		return accountType;
-	}
-	/**
-	 * getter for creditCards
-	 * @return creditCards
-	 */
-	public List<CreditCard> getCreditCards() {
-		return creditCards;
-	}
-	/**
-	 * getter for debitCards
-	 * @return debitCards
-	 */
-	public List<DebitCard> getDebitCards() {
-		return debitCards;
 	}
 }

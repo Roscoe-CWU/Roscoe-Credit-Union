@@ -1,7 +1,6 @@
 package RCU;
 
 public class CreditCard extends Card {
-	private String dueDate;
 	private double outstandingBalance;
 	
 	/**
@@ -27,5 +26,8 @@ public class CreditCard extends Card {
 	@Override
 	public void transaction(int amount) {
 		outstandingBalance += amount;
+	}
+	public double getOutstandingBalance() {
+		return outstandingBalance;
 	}
 }
