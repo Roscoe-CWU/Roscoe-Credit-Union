@@ -8,11 +8,11 @@ public class CustomerAccount extends Account {
 	private ArrayList<BankAccount> bankAccounts;
 	
 	public CustomerAccount(String username, String password, String ssn, String firstName, String middleName,
-			String lastName, String streetAddress, String city, String state, String zip, int accountID, int customerID) {
+			String lastName, String streetAddress, String city, String state, String zip, int accountID) {
 		
 		
 		super(username, password, ssn, firstName, middleName, lastName, streetAddress, city, state, zip, accountID);
-		this.customerID = customerID;
+		this.customerID = accountID;
 		bankAccounts = new ArrayList<BankAccount>();
 	}
 	

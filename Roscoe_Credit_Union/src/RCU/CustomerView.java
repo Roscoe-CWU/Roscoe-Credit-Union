@@ -27,6 +27,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class CustomerView {
 
@@ -63,8 +65,11 @@ public class CustomerView {
 	/**
 	 * Create the application.
 	 */
-	public CustomerView(CustomerAccount account) {
-		initialize(account);
+	public CustomerView(CreditUnionDatabaseConnector connector, CustomerAccount account) {
+		initialize(connector, account);
+		
+		
+		connector.getBankAccounts(account, account.getAccountID());
 		
 		NumberFormat formatter = NumberFormat.getCurrencyInstance();
 		
@@ -132,7 +137,7 @@ public class CustomerView {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize(CustomerAccount account) {
+	private void initialize(CreditUnionDatabaseConnector connector, CustomerAccount account) {
 		frame = new JFrame("Roscoe Credit Union");
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(CustomerView.class.getResource("/resources/Logo-50x50.png")));
 		frame.setBounds(100, 100, 808, 525);
@@ -146,6 +151,17 @@ public class CustomerView {
 		
 		btnLogOut = new JButton("Log Out");
 		btnLogOut.setForeground(new Color(0, 0, 255));
+		btnLogOut.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Close CustomerView
+		        frame.setVisible(false);
+		        frame.dispose();
+		        
+		     // Show the singleton instance of LogInWindow
+		        LogInWindow loginWindow = LogInWindow.getInstance(connector);
+		        loginWindow.getFrame().setVisible(true);
+			}
+		});
 		
 		scrollPane = new JScrollPane();
 		

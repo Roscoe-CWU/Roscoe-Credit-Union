@@ -1,4 +1,7 @@
+package RCU;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CreditUnionDatabaseConnector {
 
@@ -12,8 +15,8 @@ public class CreditUnionDatabaseConnector {
     // Initialize database connection
     private void initializeDBConnection() {
         String url = "jdbc:mysql://localhost:3306/mydb"; // Update with your database URL
-        String userName = "yourUsername"; // Update with your database username
-        String password = "yourPassword"; // Update with your database password
+        String userName = "root"; // Update with your database username
+        String password = "0203969"; // Update with your database password
 
         try {
             con = DriverManager.getConnection(url, userName, password);
@@ -73,18 +76,7 @@ public class CreditUnionDatabaseConnector {
             }
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
-                Account account = new Account();
-                account.setPersonAccountID(rs.getInt("personAccountID"));
-                account.setFirstName(rs.getString("firstName"));
-                account.setMiddleName(rs.getString("middleName"));
-                account.setLastName(rs.getString("lastName"));
-                account.setSSN(rs.getString("SSN"));
-                account.setStreetAddress(rs.getString("streetAddress"));
-                account.setCity(rs.getString("city"));
-                account.setState(rs.getString("state"));
-                account.setZipCode(rs.getString("zipCode"));
-                account.setUsername(rs.getString("username"));
-                account.setPassword(rs.getString("password"));
+                Account account = new Account(rs.getString("username"), rs.getString("password"), rs.getString("SSN"), rs.getString("firstName"), rs.getString("middleName"), rs.getString("lastName"), rs.getString("streetAddress"), rs.getString("city"), rs.getString("state"), rs.getString("zipCode"), rs.getInt("personAccountID"));
                 return account;
             }
         } catch (SQLException e) {
@@ -133,10 +125,153 @@ public class CreditUnionDatabaseConnector {
     // Methods for other tables (BankAccount, Customer, CreditCard, DebitCard, Manager, Teller) will be similar in structure
     // Implement them following the same pattern as above
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         CreditUnionDatabaseConnector connector = new CreditUnionDatabaseConnector();
         // Test the connector here with various operations
-    }
-}
+    }*/
 
-// We will need to create classes representing each table, e.g., 'Account', 'BankAccount', etc.
+
+
+
+    // CUSTOMER ACCOUNT METHODS
+    
+    public boolean isCustomer(int personAccountID) {
+        String query = "SELECT COUNT(*) FROM Customer WHERE customerID = ?";
+        try (PreparedStatement pstmt = con.prepareStatement(query)) {
+            pstmt.setInt(1, personAccountID);
+
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                // Check if the count is greater than 0
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Optionally handle the exception more gracefully
+        }
+        return false; // Return false if no record found or in case of exception
+    }
+
+    
+    
+    
+    public boolean isTeller(int personAccountID) {
+        String query = "SELECT COUNT(*) FROM Teller WHERE employeeID = ?";
+        try (PreparedStatement pstmt = con.prepareStatement(query)) {
+            pstmt.setInt(1, personAccountID);
+
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                // Check if the count is greater than 0
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Optionally handle the exception more gracefully
+        }
+        return false; // Return false if no record found or in case of exception
+    }
+    
+    
+    
+    public boolean isManager(int personAccountID) {
+        String query = "SELECT COUNT(*) FROM Manager WHERE accountID = ?";
+        try (PreparedStatement pstmt = con.prepareStatement(query)) {
+            pstmt.setInt(1, personAccountID);
+
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                // Check if the count is greater than 0
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Optionally handle the exception more gracefully
+        }
+        return false; // Return false if no record found or in case of exception
+    }
+
+
+
+
+
+
+    public List<BankAccount> getBankAccounts(CustomerAccount customer, int accountID) {
+        String query = "SELECT * FROM BankAccount WHERE accountID = ?";
+        List<BankAccount> bankAccounts = new ArrayList<>();
+
+        try (PreparedStatement pstmt = con.prepareStatement(query)) {
+            pstmt.setInt(1, accountID); // Set the accountID parameter
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                // Assuming BankAccount has a constructor that takes ResultSet
+            	customer.addBankAccount(new BankAccount(
+                    rs.getInt("accountID"),
+                    rs.getString("accountName"),
+                    rs.getDouble("balance"),
+                    rs.getString("AccountType")
+                ));
+                //bankAccounts.add(bankAccount);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Failed to retrieve bank accounts");
+        }
+
+        return bankAccounts; // This will be empty if no accounts found or on error
+    }
+
+
+
+
+    // ACCOUNT GETTER AND SETTERS
+
+    public void updateAccountFirstName(int personAccountID, String newFirstName) {
+        String query = "UPDATE Account SET firstName = ? WHERE personAccountID = ?";
+        try (PreparedStatement pstmt = con.prepareStatement(query)) {
+            pstmt.setString(1, newFirstName);
+            pstmt.setInt(2, personAccountID);
+            pstmt.executeUpdate();
+            System.out.println("First Name updated successfully");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Failed to update First Name");
+        }
+    }
+
+
+    // CUSTOMER ACCOUNT GETTER AND SETTERS
+
+    
+    
+    // BANK ACCOUNT GETTER AND SETTERS
+    
+    public void updateBankAccountBalance(int bankAccountID, double newBalance) {
+        String query = "UPDATE BankAccount SET balance = ? WHERE accountID = ?";
+        try (PreparedStatement pstmt = con.prepareStatement(query)) {
+            pstmt.setDouble(1, newBalance);
+            pstmt.setInt(2, bankAccountID);
+            pstmt.executeUpdate();
+            System.out.println("Balance updated successfully");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Failed to update Balance");
+        }
+    }
+
+
+    // CARD GETTER AND SETTERS
+
+    // CREDIT CARD GETTER AND SETTERS
+
+    // DEBIT CARD GETTER AND SETTERS
+
+
+
+
+
+
+
+
+}

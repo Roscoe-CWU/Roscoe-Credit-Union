@@ -26,6 +26,7 @@ import javax.swing.JPasswordField;
 
 public class LogInWindow {
 
+	private static LogInWindow instance;
 	private JFrame frame;
 	private JTextField textFieldUsername;
 	private JPasswordField textFieldPassword;
@@ -34,11 +35,17 @@ public class LogInWindow {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		CustomerAccount test = new CustomerAccount("rpatnode", "password", "111111111", "Roscoe", "T", "Patnode", "405 Inconspicuos Way", "Secret City", "Washington", "98296", 1, 1);
+		
+		
+		
+		CustomerAccount test = new CustomerAccount("rpatnode", "password", "111111111", "Roscoe", "T", "Patnode", "405 Inconspicuos Way", "Secret City", "Washington", "98296", 1);
+		
+		
+		
 		
 
-		test.addBankAccount(new BankAccount("Emergency Savings", "111111111", "Savings"));
-		test.addBankAccount(new BankAccount("Spending Money", "111111111", "Checkings"));
+		//test.addBankAccount(new BankAccount("Emergency Savings", 111111111, "Savings"));
+		//test.addBankAccount(new BankAccount("Spending Money", 111111111, "Checkings"));
 		
 		ArrayList<BankAccount> bankAccounts = test.getBankAccounts();
 		
@@ -48,11 +55,13 @@ public class LogInWindow {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					LogInWindow window = new LogInWindow();
+					CreditUnionDatabaseConnector connector = new CreditUnionDatabaseConnector();
+					LogInWindow window = new LogInWindow(connector);
+					instance = window;
 					window.frame.setVisible(true);
 					
-					CustomerView custView = new CustomerView(test);
-					custView.frame.setVisible(true);
+					//CustomerView custView = new CustomerView(test);
+					//custView.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -63,14 +72,21 @@ public class LogInWindow {
 	/**
 	 * Create the application.
 	 */
-	public LogInWindow() {
-		initialize();
+	public LogInWindow(CreditUnionDatabaseConnector connector) {
+		initialize(connector);
 	}
+	
+	public static LogInWindow getInstance(CreditUnionDatabaseConnector connector) {
+        if (instance == null) {
+            instance = new LogInWindow(connector);
+        }
+        return instance;
+    }
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize(CreditUnionDatabaseConnector connector) {
 		frame = new JFrame("Roscoe Credit Union");
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(LogInWindow.class.getResource("/resources/Logo-50x50.png")));
 		frame.setBounds(100, 100, 491, 467);
@@ -99,7 +115,36 @@ public class LogInWindow {
 			public void mouseClicked(MouseEvent e) {
 				String username = textFieldUsername.getText();
 				String password = textFieldPassword.getText();
-				JOptionPane.showMessageDialog(null, "Username: " + username + "\nPassword: " + password);
+				
+				// get the account
+				
+				
+				
+				Account account = connector.getAccountByUsernameAndPassword(username, password);
+				
+				if (account != null) {
+		            // Hide the login window
+		            frame.setVisible(false);
+
+		            // Open the Account Selection View
+		            EventQueue.invokeLater(new Runnable() {
+		                public void run() {
+		                    try {
+		                        AccountSelectionView accountSelectionView = new AccountSelectionView(connector, account);
+		                        accountSelectionView.getFrame().setVisible(true);
+		                    } catch (Exception ex) {
+		                        ex.printStackTrace();
+		                    }
+		                }
+		            });
+		            //frame.setVisible(true);
+		        } else {
+		            // Handle failed login
+		            JOptionPane.showMessageDialog(frame, "Invalid username or password.");
+		        }
+				
+				
+				//JOptionPane.showMessageDialog(null, "Username: " + username + "\nPassword: " + password);
 			}
 		});
 		btnLogIn.setForeground(new Color(0, 0, 128));
@@ -154,5 +199,12 @@ public class LogInWindow {
 		panelUsername.add(textFieldUsername);
 		textFieldUsername.setColumns(20);
 		frame.getContentPane().setLayout(groupLayout);
+	}
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
 	}
 }

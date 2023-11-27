@@ -27,6 +27,7 @@ public class Account {
 	 * @param city
 	 * @param state
 	 * @param zip
+	 * @param accountID
 	 */
 	public Account(String username, String password, String ssn, String firstName, String middleName,
 			String lastName, String streetAddress, String city, String state, String zip, int accountID) {
@@ -41,6 +42,7 @@ public class Account {
 		this.city = city;
 		this.state = state;
 		this.zip = zip;
+		this.accountID = accountID;
 
 	}
 	
@@ -50,6 +52,27 @@ public class Account {
 	 */
 	public int getAccountID() {
 		return accountID;
+	}
+	/**
+	 * getter for username
+	 * @return customerID
+	 */
+	public String getUsername() {
+		return username;
+	}
+	/**
+	 * getter for password
+	 * @return firstName
+	 */
+	public String getPassword() {
+		return password;
+	}
+	/**
+	 * setter for password
+	 * @return firstName
+	 */
+	public void setPassword(String pass) {
+		password = pass;
 	}
 	/**
 	 * getter for firstName

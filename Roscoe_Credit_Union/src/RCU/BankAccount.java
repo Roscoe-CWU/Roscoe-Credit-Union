@@ -14,10 +14,11 @@ public class BankAccount {
 	 * @param accountSSN
 	 * @param accountType
 	 */
-	public BankAccount(String accountName, String accountSSN, String accountType) {
+	public BankAccount(int bankAccountID, String accountName, double balance, String accountType) {
 		this.accountName = accountName;
-		this.accountSSN = accountSSN;
+		this.bankAccountID = bankAccountID;
 		this.accountType = accountType;
+		this.balance = balance;
 	}
 	/**
 	 * getter for accountID
