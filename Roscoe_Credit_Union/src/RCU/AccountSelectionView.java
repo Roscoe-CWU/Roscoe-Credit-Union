@@ -16,29 +16,7 @@ public class AccountSelectionView {
 
 	private JFrame frame;
 
-	/**
-	 * Launch the application.
-	 */
-	/*public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AccountSelectionView window = new AccountSelectionView(null, null);
-					window.getFrame().setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}*/
 
-	/**
-	 * Create the application.
-	 */
-	
-	/*public AccountSelectionView() {
-		initialize();
-	}*/
 	
 	public AccountSelectionView(CreditUnionDatabaseConnector connector, Account account) {
 		initialize(connector, account);
@@ -83,7 +61,7 @@ public class AccountSelectionView {
 					public void run() {
 						try {
 							CustomerView custView = new CustomerView(connector, customer);
-							custView.frame.setVisible(true);
+							custView.getFrame().setVisible(true);
 							// Close CustomerView
 					        frame.dispose();
 						} catch (Exception e) {

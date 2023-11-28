@@ -16,7 +16,7 @@ public class CreditUnionDatabaseConnector {
     private void initializeDBConnection() {
         String url = "jdbc:mysql://localhost:3306/mydb"; // Update with your database URL
         String userName = "root"; // Update with your database username
-        String password = "0203969"; // Update with your database password
+        String password = ""; // Update with your database password
 
         try {
             con = DriverManager.getConnection(url, userName, password);
@@ -239,7 +239,33 @@ public class CreditUnionDatabaseConnector {
             System.out.println("Failed to update First Name");
         }
     }
-
+    public void updateAccountLastName(int personAccountID, String newLastName) {
+        String query = "UPDATE Account SET lastName = ? WHERE personAccountID = ?";
+        try (PreparedStatement pstmt = con.prepareStatement(query)) {
+            pstmt.setString(1, newLastName);
+            pstmt.setInt(2, personAccountID);
+            pstmt.executeUpdate();
+            System.out.println("Last Name updated successfully");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Failed to update Last Name");
+        }
+    }
+    public void updateAccountAddress(int personAccountID, String newStreet, String newCity, String newState, String newZip) {
+        String query = "UPDATE Account SET streetAddress = ?, city = ?, state = ?, zipCode = ? WHERE personAccountID = ?";
+        try (PreparedStatement pstmt = con.prepareStatement(query)) {
+            pstmt.setString(1, newStreet);
+            pstmt.setString(2, newCity);
+            pstmt.setString(3, newState);
+            pstmt.setString(4, newZip);
+            pstmt.setInt(5, personAccountID);
+            pstmt.executeUpdate();
+            System.out.println("Address updated successfully");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Failed to update Address");
+        }
+    }
 
     // CUSTOMER ACCOUNT GETTER AND SETTERS
 
@@ -247,11 +273,12 @@ public class CreditUnionDatabaseConnector {
     
     // BANK ACCOUNT GETTER AND SETTERS
     
-    public void updateBankAccountBalance(int bankAccountID, double newBalance) {
-        String query = "UPDATE BankAccount SET balance = ? WHERE accountID = ?";
+    public void updateBankAccountBalance(int bankAccountID, String accountName, double newBalance) {
+        String query = "UPDATE BankAccount SET balance = ? WHERE accountID = ? && accountName = ?";
         try (PreparedStatement pstmt = con.prepareStatement(query)) {
             pstmt.setDouble(1, newBalance);
             pstmt.setInt(2, bankAccountID);
+            pstmt.setString(3, accountName);
             pstmt.executeUpdate();
             System.out.println("Balance updated successfully");
         } catch (SQLException e) {
@@ -259,19 +286,53 @@ public class CreditUnionDatabaseConnector {
             System.out.println("Failed to update Balance");
         }
     }
-
+    public void updateBankAccountName(int bankAccountID, String prevAccountName, String newAccountName) {
+        String query = "UPDATE BankAccount SET accountName = ? WHERE accountID = ? && accountName = ?";
+        try (PreparedStatement pstmt = con.prepareStatement(query)) {
+            pstmt.setString(1, newAccountName);
+            pstmt.setInt(2, bankAccountID);
+            pstmt.setString(3, prevAccountName);
+            pstmt.executeUpdate();
+            System.out.println("Balance updated successfully");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Failed to update Balance");
+        }
+    }
+    
+    
+    public void deleteBankAccount(int bankAccountID, String accountName) {
+    	String query = "DELETE FROM BankAccount WHERE accountID = ? && accountName = ?";
+        try (PreparedStatement pstmt = con.prepareStatement(query)) {
+        	pstmt.setInt(1, bankAccountID);
+            pstmt.setString(2, accountName);
+            pstmt.executeUpdate();
+            System.out.println("Bank Account deleted successfully");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Failed to delete Bank Account");
+        }
+    }
+    public void addBankAccount(int bankAccountID, String accountName, double balance, String accountType) {
+    	String query = "INSERT INTO BankAccount (accountID, accountName, balance, AccountType) VALUES (?, ?, ?, ?)";
+        try (PreparedStatement pstmt = con.prepareStatement(query)) {
+            pstmt.setInt(1, bankAccountID);
+            pstmt.setString(2, accountName);
+            pstmt.setDouble(3, balance);
+            pstmt.setString(4, accountType);
+            pstmt.executeUpdate();
+            System.out.println("Account added successfully");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Failed to add account");
+        }
+    }
 
     // CARD GETTER AND SETTERS
 
     // CREDIT CARD GETTER AND SETTERS
 
     // DEBIT CARD GETTER AND SETTERS
-
-
-
-
-
-
 
 
 }

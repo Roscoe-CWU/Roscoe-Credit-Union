@@ -35,23 +35,6 @@ public class LogInWindow {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		
-		
-		
-		CustomerAccount test = new CustomerAccount("rpatnode", "password", "111111111", "Roscoe", "T", "Patnode", "405 Inconspicuos Way", "Secret City", "Washington", "98296", 1);
-		
-		
-		
-		
-
-		//test.addBankAccount(new BankAccount("Emergency Savings", 111111111, "Savings"));
-		//test.addBankAccount(new BankAccount("Spending Money", 111111111, "Checkings"));
-		
-		ArrayList<BankAccount> bankAccounts = test.getBankAccounts();
-		
-		
-		
-		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -59,9 +42,6 @@ public class LogInWindow {
 					LogInWindow window = new LogInWindow(connector);
 					instance = window;
 					window.frame.setVisible(true);
-					
-					//CustomerView custView = new CustomerView(test);
-					//custView.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

@@ -27,10 +27,10 @@ public class CustomerAccount extends Account {
 		bankAccounts.remove(account);
 	}
 	public ArrayList<BankAccount> getBankAccounts() {
-		ArrayList<BankAccount> temp = new ArrayList<BankAccount>();
-		for(BankAccount bank : bankAccounts) {
-			temp.add(bank);
-		}
-		return temp;
+		return bankAccounts;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 }

@@ -1,5 +1,6 @@
 package RCU;
 
+import java.text.NumberFormat;
 
 public class BankAccount {
 	private int bankAccountID;
@@ -84,5 +85,14 @@ public class BankAccount {
 	 */
 	public String getAccountType() {
 		return accountType;
+	}
+	/**
+	 * overrides toString() method to print account name and balance
+	 */
+	@Override
+	public String toString() {
+		NumberFormat formatter = NumberFormat.getCurrencyInstance();
+		
+		return accountName + ": " + formatter.format(balance);
 	}
 }
