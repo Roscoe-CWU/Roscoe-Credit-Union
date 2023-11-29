@@ -2,6 +2,8 @@ package RCU;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 public class CreditUnionDatabaseConnector {
 
@@ -16,7 +18,7 @@ public class CreditUnionDatabaseConnector {
     private void initializeDBConnection() {
         String url = "jdbc:mysql://localhost:3306/mydb"; // Update with your database URL
         String userName = "root"; // Update with your database username
-        String password = ""; // Update with your database password
+        String password = "0203969"; // Update with your database password
 
         try {
             con = DriverManager.getConnection(url, userName, password);
@@ -28,20 +30,19 @@ public class CreditUnionDatabaseConnector {
     }
 
     // Add an account to the 'Account' table
-    public void addAccount(int personAccountID, String firstName, String middleName, String lastName, String SSN, String streetAddress, String city, String state, String zipCode, String username, String password) {
-        String query = "INSERT INTO Account (personAccountID, firstName, middleName, lastName, SSN, streetAddress, city, state, zipCode, username, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    public void addAccount(String firstName, String middleName, String lastName, String SSN, String streetAddress, String city, String state, String zipCode, String username, String password) {
+        String query = "INSERT INTO Account (firstName, middleName, lastName, SSN, streetAddress, city, state, zipCode, username, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement pstmt = con.prepareStatement(query)) {
-            pstmt.setInt(1, personAccountID);
-            pstmt.setString(2, firstName);
-            pstmt.setString(3, middleName);
-            pstmt.setString(4, lastName);
-            pstmt.setString(5, SSN);
-            pstmt.setString(6, streetAddress);
-            pstmt.setString(7, city);
-            pstmt.setString(8, state);
-            pstmt.setString(9, zipCode);
-            pstmt.setString(10, username);
-            pstmt.setString(11, password);
+            pstmt.setString(1, firstName);
+            pstmt.setString(2, middleName);
+            pstmt.setString(3, lastName);
+            pstmt.setString(4, SSN);
+            pstmt.setString(5, streetAddress);
+            pstmt.setString(6, city);
+            pstmt.setString(7, state);
+            pstmt.setString(8, zipCode);
+            pstmt.setString(9, username);
+            pstmt.setString(10, password);
             pstmt.executeUpdate();
             System.out.println("Account added successfully");
         } catch (SQLException e) {
@@ -269,7 +270,18 @@ public class CreditUnionDatabaseConnector {
 
     // CUSTOMER ACCOUNT GETTER AND SETTERS
 
-    
+ // Add an account to the 'Customer' table
+    public void addCustomerAccount(int customerID) {
+        String query = "INSERT INTO Customer (customerID) VALUES (?)";
+        try (PreparedStatement pstmt = con.prepareStatement(query)) {
+            pstmt.setInt(1, customerID);
+            pstmt.executeUpdate();
+            System.out.println("Account added successfully");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Failed to add account");
+        }
+    }
     
     // BANK ACCOUNT GETTER AND SETTERS
     
@@ -334,5 +346,26 @@ public class CreditUnionDatabaseConnector {
 
     // DEBIT CARD GETTER AND SETTERS
 
+    
+    
+    public Map<String, Double> getAverageAccountBalances() {
+        Map<String, Double> averages = new HashMap<>();
+        String query = "SELECT accountType, AVG(balance) as averageBalance FROM BankAccount GROUP BY accountType";
+
+        try (PreparedStatement pstmt = con.prepareStatement(query)) {
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                String accountType = rs.getString("accountType");
+                double averageBalance = rs.getDouble("averageBalance");
+                averages.put(accountType, averageBalance);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Optionally handle the exception more gracefully
+        }
+
+        return averages;
+    }
 
 }

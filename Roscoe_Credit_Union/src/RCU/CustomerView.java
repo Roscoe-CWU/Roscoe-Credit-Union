@@ -42,7 +42,7 @@ public class CustomerView {
 	private static final ImageIcon logo500 = new ImageIcon(CustomerView.class.getResource("/resources/Logo-500x500.png"));
 	
 	
-	private JFrame frame;
+	public JFrame frame;
 	private JPanel panelBanks;
 	private JLabel lblRCU;
 	private JButton btnLogOut;
