@@ -1,7 +1,6 @@
 package RCU;
 
 import java.awt.EventQueue;
-import java.awt.Window;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -17,29 +16,9 @@ public class AccountSelectionView {
 	private JFrame frame;
 
 	/**
-	 * Launch the application.
-	 */
-	/*public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AccountSelectionView window = new AccountSelectionView(null, null);
-					window.getFrame().setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}*/
-
-	/**
 	 * Create the application.
 	 */
-	
-	/*public AccountSelectionView() {
-		initialize();
-	}*/
-	
+
 	public AccountSelectionView(CreditUnionDatabaseConnector connector, Account account) {
 		initialize(connector, account);
 	}
@@ -151,10 +130,18 @@ public class AccountSelectionView {
 		panel.add(lblNewLabel);
 	}
 
+	/**
+	 * getter for frame
+	 * @return frame
+	 */
 	public JFrame getFrame() {
 		return frame;
 	}
 
+	/**
+	 * setter for frame
+	 * @param frame
+	 */
 	public void setFrame(JFrame frame) {
 		this.frame = frame;
 	}

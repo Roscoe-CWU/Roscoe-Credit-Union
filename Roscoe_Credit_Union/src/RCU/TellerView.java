@@ -4,15 +4,11 @@ import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.SystemColor;
-import java.awt.Window;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -27,15 +23,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.SpringLayout;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.DefaultStyledDocument;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.Style;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.StyleContext;
-import javax.swing.text.StyledDocument;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
 
 public class TellerView {
 
@@ -44,9 +32,7 @@ public class TellerView {
 	private static NumberFormat formatter = NumberFormat.getCurrencyInstance();
 	private static final ImageIcon logo50 = new ImageIcon(CustomerView.class.getResource("/resources/Logo-50x50.png"));
 	private static final ImageIcon logo100 = new ImageIcon(CustomerView.class.getResource("/resources/Logo-100x100.png"));
-	private JPanel panelBanks;
-	private JScrollPane scrollPane;
-	private GridBagLayout gbl_panelBanks;
+
 
 
 
@@ -71,7 +57,6 @@ public class TellerView {
 		getFrame().getContentPane().add(panel, BorderLayout.CENTER);
 		SpringLayout sl_panel = new SpringLayout();
 		panel.setLayout(sl_panel);
-		scrollPane = new JScrollPane();
 
 		
 		JButton btnNewButton_1 = new JButton("<html>Add/Update/Remove<br/>Customer Accounts</html>");
@@ -83,7 +68,6 @@ public class TellerView {
 							TellerUpdateAccountView tellerUpdateView = new TellerUpdateAccountView(connector);
 							tellerUpdateView.frame.setVisible(true);
 							// Close CustomerView
-					        //frame.dispose();
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
@@ -112,7 +96,6 @@ public class TellerView {
 					CustomerAccount account = new CustomerAccount(mainaccount.getUsername(), mainaccount.getPassword(), mainaccount.getSSN(), mainaccount.getFirstName(), mainaccount.getMiddleName(), mainaccount.getLastName(), mainaccount.getStreetAddress(), mainaccount.getCity(), mainaccount.getState(), mainaccount.getZip(), mainaccount.getAccountID());
 					ArrayList<BankAccount> bankAccounts = (ArrayList<BankAccount>) connector.getBankAccounts(account, account.getAccountID());
 					System.out.println();
-					int i = 0;
 					for (BankAccount bank : bankAccounts) {
 						account.addBankAccount(bank);
 						System.out.println(bank);
@@ -123,7 +106,6 @@ public class TellerView {
 					Object[] bankAccounts1 = account.getBankAccounts().toArray();
 				
 					JComboBox<Object> firstList = new JComboBox<Object>(bankAccounts1);
-					JComboBox<Object> secondList = new JComboBox<Object>(bankAccounts1);
 					JTextField amountTxt = new JTextField(10);
 					
 					GridBagLayout gbl = new GridBagLayout();
@@ -144,10 +126,6 @@ public class TellerView {
 					panel.add(new JLabel("Select the account to deposit to: "), gbcFirstLbl);
 					panel.add(firstList, gbcFirstList);
 				
-					//GridBagConstraints gbcSecondLbl = new GridBagConstraints(0, 3, 2, 1, 0, 0, GridBagConstraints.WEST,  GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 0, 0);
-					//GridBagConstraints gbcSecondList = new GridBagConstraints(0, 4, 2, 1, 0, 0, GridBagConstraints.WEST,  GridBagConstraints.HORIZONTAL, new Insets(0, 5, 10, 5), 0, 0);
-					//panel.add(new JLabel("Select the account to transfer to: "), gbcSecondLbl);
-					//panel.add(secondList, gbcSecondList);
 				
 					GridBagConstraints gbcAmountLbl = new GridBagConstraints(0, 5, 1, 1, 0, 0, GridBagConstraints.WEST,  GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 0, 0);
 					GridBagConstraints gbcAmountTxt = new GridBagConstraints(1, 5, 1, 1, 0, 0, GridBagConstraints.WEST,  GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 0, 0);
@@ -166,22 +144,15 @@ public class TellerView {
 						
 						}
 						BankAccount firstAccount = account.getBankAccounts().get(firstList.getSelectedIndex());
-						//BankAccount secondAccount = account.getBankAccounts().get(secondList.getSelectedIndex());
-					
-						//if (firstAccount.getBalance() >= amount) {
-							int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to deposit " + formatter.format(amount) + " to " + firstAccount + "?",
-									"Confirm Transaction", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, logo50);
-							if (confirm == JOptionPane.YES_OPTION) {
-								firstAccount.deposit(amount);
-							
-								connector.updateBankAccountBalance(account.getAccountID(), firstAccount.getAccountName(), firstAccount.getBalance());
-								//connector.updateBankAccountBalance(account.getAccountID(), secondAccount.getAccountName(), secondAccount.getBalance());
-							}
-						//} else {
-							//JOptionPane.showMessageDialog(null, "Not Enough Funds");
-						//}
+						int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to deposit " + formatter.format(amount) + " to " + firstAccount + "?",
+								"Confirm Transaction", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, logo50);
+						if (confirm == JOptionPane.YES_OPTION) {
+							firstAccount.deposit(amount);
+						
+							connector.updateBankAccountBalance(account.getAccountID(), firstAccount.getAccountName(), firstAccount.getBalance());
+							//connector.updateBankAccountBalance(account.getAccountID(), secondAccount.getAccountName(), secondAccount.getBalance());
+						}
 					}
-					updateBankList(account);
 				}
 			}
 		});
@@ -221,7 +192,6 @@ public class TellerView {
 					CustomerAccount account = new CustomerAccount(mainaccount.getUsername(), mainaccount.getPassword(), mainaccount.getSSN(), mainaccount.getFirstName(), mainaccount.getMiddleName(), mainaccount.getLastName(), mainaccount.getStreetAddress(), mainaccount.getCity(), mainaccount.getState(), mainaccount.getZip(), mainaccount.getAccountID());
 					ArrayList<BankAccount> bankAccounts = (ArrayList<BankAccount>) connector.getBankAccounts(account, account.getAccountID());
 					System.out.println();
-					int i = 0;
 					for (BankAccount bank : bankAccounts) {
 						account.addBankAccount(bank);
 						System.out.println(bank);
@@ -232,7 +202,6 @@ public class TellerView {
 					Object[] bankAccounts1 = account.getBankAccounts().toArray();
 				
 					JComboBox<Object> firstList = new JComboBox<Object>(bankAccounts1);
-					JComboBox<Object> secondList = new JComboBox<Object>(bankAccounts1);
 					JTextField amountTxt = new JTextField(10);
 					
 					GridBagLayout gbl = new GridBagLayout();
@@ -253,11 +222,6 @@ public class TellerView {
 					panel.add(new JLabel("Select the account to withdraw from: "), gbcFirstLbl);
 					panel.add(firstList, gbcFirstList);
 				
-					//GridBagConstraints gbcSecondLbl = new GridBagConstraints(0, 3, 2, 1, 0, 0, GridBagConstraints.WEST,  GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 0, 0);
-					//GridBagConstraints gbcSecondList = new GridBagConstraints(0, 4, 2, 1, 0, 0, GridBagConstraints.WEST,  GridBagConstraints.HORIZONTAL, new Insets(0, 5, 10, 5), 0, 0);
-					//panel.add(new JLabel("Select the account to transfer to: "), gbcSecondLbl);
-					//panel.add(secondList, gbcSecondList);
-				
 					GridBagConstraints gbcAmountLbl = new GridBagConstraints(0, 5, 1, 1, 0, 0, GridBagConstraints.WEST,  GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 0, 0);
 					GridBagConstraints gbcAmountTxt = new GridBagConstraints(1, 5, 1, 1, 0, 0, GridBagConstraints.WEST,  GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 0, 0);
 					panel.add(new JLabel("Enter the amount to withdraw: $"), gbcAmountLbl);
@@ -275,7 +239,6 @@ public class TellerView {
 						
 						}
 						BankAccount firstAccount = account.getBankAccounts().get(firstList.getSelectedIndex());
-						//BankAccount secondAccount = account.getBankAccounts().get(secondList.getSelectedIndex());
 					
 						if (firstAccount.getBalance() >= amount) {
 							int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to withdraw " + formatter.format(amount) + " from " + firstAccount + "?",
@@ -284,13 +247,11 @@ public class TellerView {
 								firstAccount.withdraw(amount);
 							
 								connector.updateBankAccountBalance(account.getAccountID(), firstAccount.getAccountName(), firstAccount.getBalance());
-								//connector.updateBankAccountBalance(account.getAccountID(), secondAccount.getAccountName(), secondAccount.getBalance());
 							}
 						} else {
 							JOptionPane.showMessageDialog(null, "Not Enough Funds");
 						}
 					}
-					updateBankList(account);
 				}
 			}
 		});
@@ -311,82 +272,20 @@ public class TellerView {
 		panel.add(btnNewButton_3);
 	}
 
+	/**
+	 * getter for frame
+	 * @return frame
+	 */
 	public JFrame getFrame() {
 		return frmTellerView;
 	}
 
+	/**
+	 * setter for frame
+	 * @param frame
+	 */
 	public void setFrame(JFrame frame) {
 		this.frmTellerView = frame;
 		frmTellerView.setTitle("Teller View");
-	}
-	public void updateBankList(CustomerAccount account) {
-		panelBanks = new JPanel();
-		scrollPane.setViewportView(panelBanks);
-		gbl_panelBanks = new GridBagLayout();
-		gbl_panelBanks.columnWidths = new int[]{0};
-		gbl_panelBanks.rowHeights = new int[]{0};
-		gbl_panelBanks.columnWeights = new double[]{Double.MIN_VALUE};
-		gbl_panelBanks.rowWeights = new double[]{Double.MIN_VALUE};
-		panelBanks.setLayout(gbl_panelBanks);
-
-		
-		ArrayList<BankAccount> bankAccounts = account.getBankAccounts();
-		
-		int gridy = 0;
-		for (BankAccount bank : bankAccounts) {
-			JTextPane textPaneL = new JTextPane();
-			GridBagConstraints gbcL = new GridBagConstraints(0, gridy, 1, 1, 0, 0, GridBagConstraints.WEST,  GridBagConstraints.HORIZONTAL, new Insets(0, 0, 5, 0), 0, 0);
-			textPaneL.setText(bank.getAccountName() + " (" + bank.getAccountType() + ")\nBalance:" + "\n");
-			SimpleAttributeSet sasBold = new SimpleAttributeSet();
-			StyleConstants.setBold(sasBold, true);
-			StyleConstants.setForeground(sasBold, SystemColor.textHighlight);
-			textPaneL.getStyledDocument().setCharacterAttributes(0, bank.getAccountName().length() + bank.getAccountType().length() + 3, sasBold, false);
-			textPaneL.setEditable(false);
-			panelBanks.add(textPaneL, gbcL);
-			
-			
-			
-			StyleContext context = new StyleContext();
-		    StyledDocument document = new DefaultStyledDocument(context);
-
-		    Style style = context.getStyle(StyleContext.DEFAULT_STYLE);
-		    StyleConstants.setAlignment(style, StyleConstants.ALIGN_RIGHT);
-
-		    try {
-				document.insertString(document.getLength(), "\n" + formatter.format(bank.getBalance()) + "\n", style);
-			} catch (BadLocationException e) {
-				e.printStackTrace();
-			}
-			
-			
-		    JTextPane textPaneR = new JTextPane(document);
-			GridBagConstraints gbcR = new GridBagConstraints(1, gridy, 1, 1, 1, 1, GridBagConstraints.EAST,  GridBagConstraints.HORIZONTAL, new Insets(0, 0, 5, 0), 0, 0);
-			
-			textPaneR.setText("\n" + formatter.format(bank.getBalance()) + "\n");
-			textPaneR.setEditable(false);
-			panelBanks.add(textPaneR, gbcR);
-			
-			gridy++;
-		}
-		// filler textpanes
-		if (bankAccounts.size() < 4) {
-			for (int i = 0; i < (4 - bankAccounts.size()); i++) {
-				JTextPane textPaneL = new JTextPane();
-				GridBagConstraints gbcL = new GridBagConstraints(0, gridy, 1, 1, 0, 0, GridBagConstraints.WEST,  GridBagConstraints.HORIZONTAL, new Insets(0, 0, 5, 0), 0, 0);
-				textPaneL.setText("\n\n");
-				textPaneL.setOpaque(false);
-				textPaneL.setEditable(false);
-				panelBanks.add(textPaneL, gbcL);
-				
-				
-				JTextPane textPaneR = new JTextPane();
-				GridBagConstraints gbcR = new GridBagConstraints(1, gridy, 1, 1, 1, 1, GridBagConstraints.EAST,  GridBagConstraints.HORIZONTAL, new Insets(0, 0, 5, 0), 0, 0);
-				textPaneR.setText("\n\n");
-				textPaneR.setOpaque(false);
-				textPaneR.setEditable(false);
-				panelBanks.add(textPaneR, gbcR);
-				gridy++;
-			}
-		}
 	}
 }

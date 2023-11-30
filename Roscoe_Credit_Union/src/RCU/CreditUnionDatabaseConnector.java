@@ -18,7 +18,7 @@ public class CreditUnionDatabaseConnector {
     private void initializeDBConnection() {
         String url = "jdbc:mysql://localhost:3306/mydb"; // Update with your database URL
         String userName = "root"; // Update with your database username
-        String password = "robbierockstar77"; // Update with your database password
+        String password = ""; // Update with your database password
 
         try {
             con = DriverManager.getConnection(url, userName, password);
@@ -126,11 +126,6 @@ public class CreditUnionDatabaseConnector {
     // Methods for other tables (BankAccount, Customer, CreditCard, DebitCard, Manager, Teller) will be similar in structure
     // Implement them following the same pattern as above
 
-    /*public static void main(String[] args) {
-        CreditUnionDatabaseConnector connector = new CreditUnionDatabaseConnector();
-        // Test the connector here with various operations
-    }*/
-
 
 
 
@@ -213,7 +208,6 @@ public class CreditUnionDatabaseConnector {
                     rs.getDouble("balance"),
                     rs.getString("AccountType")
                 ));
-                //bankAccounts.add(bankAccount);
             }
         } catch (SQLException e) {
             e.printStackTrace();

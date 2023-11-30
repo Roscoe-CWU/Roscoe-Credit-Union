@@ -2,7 +2,6 @@ package RCU;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import java.awt.GridBagLayout;
 import java.awt.Image;
 
 import javax.swing.GroupLayout;
@@ -18,7 +17,6 @@ import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import java.awt.Toolkit;

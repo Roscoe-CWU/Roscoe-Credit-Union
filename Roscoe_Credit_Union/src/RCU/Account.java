@@ -166,14 +166,14 @@ public class Account {
 		this.state = state;
 	}
 	/**
-	 * getter for zip
+	 * getter for zip code
 	 * @return zip
 	 */
 	public String getZip() {
 		return zip;
 	}
 	/**
-	 * setter for zip
+	 * setter for zip code
 	 * @param zip
 	 */
 	public void setZip(String zip) {

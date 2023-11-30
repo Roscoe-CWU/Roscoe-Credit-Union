@@ -1,13 +1,10 @@
 package RCU;
 
-import java.awt.EventQueue;
 import java.util.Map;
-import java.util.HashMap;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
-import javax.swing.JProgressBar;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.GroupLayout;
@@ -21,22 +18,6 @@ public class ManagerView {
 
 	public JFrame frmManagerView;
 
-	/**
-	 * Launch the application.
-	 */
-	/*public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					CreditUnionDatabaseConnector connector = new CreditUnionDatabaseConnector();
-					ManagerView window = new ManagerView(connector);
-					window.frmManagerView.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}*/
 
 	/**
 	 * Create the application.

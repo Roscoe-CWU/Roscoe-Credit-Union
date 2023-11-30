@@ -10,7 +10,7 @@ public class BankAccount {
 	private String accountType;
 	
 	/**
-	 * more exansive constructor for BankAccount
+	 * constructor for BankAccount
 	 * @param accountName
 	 * @param accountSSN
 	 * @param accountType
