@@ -179,9 +179,4 @@ public class Account {
 	public void setZip(String zip) {
 		this.zip = zip;
 	}
-	/**
-	 * getter for bankAccounts
-	 * @return bankAccounts
-	 */
-	
 }

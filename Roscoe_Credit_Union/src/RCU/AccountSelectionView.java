@@ -79,7 +79,6 @@ public class AccountSelectionView {
 					}
 				});
 				// Close CustomerView
-		        //frame.setVisible(false);
 		        frame.dispose();
 			}
 		});
@@ -107,8 +106,6 @@ public class AccountSelectionView {
 						}
 					}
 				});
-				// Close CustomerView
-		        //frame.setVisible(false);
 		        frame.dispose();
 			}
 		});
@@ -140,7 +137,6 @@ public class AccountSelectionView {
 					}
 				});
 				// Close CustomerView
-		        //frame.setVisible(false);
 		        frame.dispose();
 			}
 		});

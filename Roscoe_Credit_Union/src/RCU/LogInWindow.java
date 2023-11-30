@@ -67,6 +67,7 @@ public class LogInWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize(CreditUnionDatabaseConnector connector) {
+		// Main frame
 		frame = new JFrame("Roscoe Credit Union");
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(LogInWindow.class.getResource("/resources/Logo-50x50.png")));
 		frame.setBounds(100, 100, 491, 467);
@@ -74,31 +75,28 @@ public class LogInWindow {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel panelUsername = new JPanel();
-		
 		JPanel panelPassword = new JPanel();
 		
+		// Password text field
 		JLabel lblPassword = new JLabel("Password:");
 		lblPassword.setForeground(new Color(0, 0, 128));
 		panelPassword.add(lblPassword);
-		
 		textFieldPassword = new JPasswordField();
 		textFieldPassword.setColumns(20);
 		panelPassword.add(textFieldPassword);
 		
+		// Log in title
 		JLabel lblLogIn = new JLabel("Log In");
 		lblLogIn.setForeground(SystemColor.textHighlight);
 		lblLogIn.setFont(new Font("Tahoma", Font.PLAIN, 40));
 		
+		// Log in button
 		JButton btnLogIn = new JButton("Log In");
 		btnLogIn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				String username = textFieldUsername.getText();
-				String password = textFieldPassword.getText();
-				
-				// get the account
-				
-				
+				String password = String.valueOf(textFieldPassword.getPassword());
 				
 				Account account = connector.getAccountByUsernameAndPassword(username, password);
 				
@@ -117,18 +115,16 @@ public class LogInWindow {
 		                    }
 		                }
 		            });
-		            //frame.setVisible(true);
 		        } else {
 		            // Handle failed login
 		            JOptionPane.showMessageDialog(frame, "Invalid username or password.");
 		        }
 				
-				
-				//JOptionPane.showMessageDialog(null, "Username: " + username + "\nPassword: " + password);
 			}
 		});
 		btnLogIn.setForeground(new Color(0, 0, 128));
 		
+		// Logo
 		JLabel lblNewLabel = new JLabel();
 		ImageIcon icon = new ImageIcon(LogInWindow.class.getResource("/resources/Logo-500x500.png"));
 		lblNewLabel.setIcon(new ImageIcon(icon.getImage().getScaledInstance(200, 200, Image.SCALE_DEFAULT)));
@@ -171,19 +167,27 @@ public class LogInWindow {
 					.addGap(31))
 		);
 		
+		// Username text field
 		JLabel lblUsername = new JLabel(" Username:");
 		lblUsername.setForeground(new Color(0, 0, 128));
 		panelUsername.add(lblUsername);
-		
 		textFieldUsername = new JTextField();
 		panelUsername.add(textFieldUsername);
 		textFieldUsername.setColumns(20);
 		frame.getContentPane().setLayout(groupLayout);
 	}
+	/**
+	 * getter for the frame
+	 * @return frame
+	 */
 	public JFrame getFrame() {
 		return frame;
 	}
-
+	
+	/**
+	 * setter for the frame
+	 * @param frame
+	 */
 	public void setFrame(JFrame frame) {
 		this.frame = frame;
 	}

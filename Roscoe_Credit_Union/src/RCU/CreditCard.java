@@ -27,6 +27,10 @@ public class CreditCard extends Card {
 	public void transaction(int amount) {
 		outstandingBalance += amount;
 	}
+	/**
+	 * getter for outstandingBalance
+	 * @return outstandingBalance
+	 */
 	public double getOutstandingBalance() {
 		return outstandingBalance;
 	}

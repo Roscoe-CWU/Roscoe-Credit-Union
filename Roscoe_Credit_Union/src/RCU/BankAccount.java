@@ -88,6 +88,7 @@ public class BankAccount {
 	}
 	/**
 	 * overrides toString() method to print account name and balance
+	 * @return "(account name): (balance)"
 	 */
 	@Override
 	public String toString() {

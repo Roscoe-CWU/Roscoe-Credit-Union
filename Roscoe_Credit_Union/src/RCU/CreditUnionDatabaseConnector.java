@@ -18,7 +18,7 @@ public class CreditUnionDatabaseConnector {
     private void initializeDBConnection() {
         String url = "jdbc:mysql://localhost:3306/mydb"; // Update with your database URL
         String userName = "root"; // Update with your database username
-        String password = "0203969"; // Update with your database password
+        String password = "robbierockstar77"; // Update with your database password
 
         try {
             con = DriverManager.getConnection(url, userName, password);
@@ -269,8 +269,8 @@ public class CreditUnionDatabaseConnector {
     }
 
     // CUSTOMER ACCOUNT GETTER AND SETTERS
-
- // Add an account to the 'Customer' table
+    
+    // Add an account to the 'Customer' table
     public void addCustomerAccount(int customerID) {
         String query = "INSERT INTO Customer (customerID) VALUES (?)";
         try (PreparedStatement pstmt = con.prepareStatement(query)) {
