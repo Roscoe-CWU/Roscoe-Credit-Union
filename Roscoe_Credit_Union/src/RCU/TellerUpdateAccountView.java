@@ -28,22 +28,6 @@ public class TellerUpdateAccountView {
 	private JTextField state;
 
 	/**
-	 * Launch the application.
-	 */
-	/*public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TellerUpdateAccountView window = new TellerUpdateAccountView();
-					window.frmTellerCreateOr.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}*/
-
-	/**
 	 * Create the application.
 	 */
 	public TellerUpdateAccountView(CreditUnionDatabaseConnector connector) {
