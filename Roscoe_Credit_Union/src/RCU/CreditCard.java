@@ -2,6 +2,7 @@ package RCU;
 
 public class CreditCard extends Card {
 	private double outstandingBalance;
+	private double creditLimit;
 	
 	/**
 	 * constructor for CreditCard
@@ -33,5 +34,18 @@ public class CreditCard extends Card {
 	 */
 	public double getOutstandingBalance() {
 		return outstandingBalance;
+	}
+	/**
+	 * getter for creditLimit
+	 */
+	public double getCreditLimit() {
+		return creditLimit;
+	}
+	/**
+	 * setter for creditLimit
+	 * @param amount
+	 */
+	public void setCreditLimit(double amount) {
+		creditLimit = amount;
 	}
 }
